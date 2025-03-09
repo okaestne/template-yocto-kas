@@ -1,0 +1,2 @@
+# un-ignore sources, to search for files in VSCode
+!sources/

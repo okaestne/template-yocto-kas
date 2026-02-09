@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siemens/kas/master/kas/schema-kas.json
+header:
+  version: 18
+
+machine: qemuarm64
+distro: poky
+target:
+  - core-image-minimal
+
+repos:
+  bitbake:
+    path: sources/bitbake
+    url: https://git.openembedded.org/bitbake
+    # branch: '2.8'
+    tag: yocto-5.0.14
+    commit: 8dcf084522b9c66a6639b5f117f554fde9b6b45a
+    layers:
+      bitbake: disabled  # not a layer, just clone it to get bitbake and tools
+
+  oe-core:
+    path: sources/oe-core
+    url: https://git.openembedded.org/openembedded-core
+    # branch: scarthgap
+    tag: yocto-5.0.14
+    commit: 471adaa5f77fa3b974eab60a2ded48e360042828
+    layers:
+      meta:
+
+  # we base on poky.cfg
+  meta-yocto:
+    path: sources/meta-yocto
+    url: https://git.yoctoproject.org/meta-yocto
+    # branch: scarthgap
+    tag: yocto-5.0.14
+    commit: bf6aea52c4009e08f26565c33ce432eec7cfb090
+    layers:
+      meta-poky:
+
+  meta-openembedded:
+    path: sources/meta-openembedded
+    url: https://github.com/openembedded/meta-openembedded
+    branch: scarthgap
+    commit: 2b26d30fc7f478f5735d514f0c1bc28f6a4148b6
+    layers:
+      meta-networking:
+      meta-oe:
+      meta-python:
+
+local_conf_header:
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES = "allow-root-login empty-root-password serial-autologin-root"
+
+  demo-conf: |
+    IMAGE_INSTALL:append = " util-linux-agetty htop"

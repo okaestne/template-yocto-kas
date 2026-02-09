@@ -1,7 +1,0 @@
-{
-    "recommendations": [
-        "yocto-project.yocto-bitbake",
-        "hangxingliu.vscode-systemd-support",
-        "timonwong.shellcheck",
-    ]
-}

@@ -1,0 +1,66 @@
+{
+    "build": { "dockerfile": "Dockerfile"},
+    "remoteUser": "dev",
+    "containerEnv": {
+        "DL_DIR": "${containerWorkspaceFolder}/build/downloads",
+        "SSTATE_DIR": "${containerWorkspaceFolder}/build/sstate-cache"
+    },
+    "mounts": [{
+        "source": "yocto-dldir",
+        "target": "${containerWorkspaceFolder}/build/downloads",
+        "type": "volume"
+    }, {
+        "source": "yocto-sstate",
+        "target": "${containerWorkspaceFolder}/build/sstate-cache",
+        "type": "volume"
+    }],
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": false,
+            "installOhMyZsh": false,
+            "username": "dev"
+        }
+    },
+    "onCreateCommand": "/onCreateCommand.sh",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.autoComplete.extraPaths": [
+                    "${workspaceFolder}/sources/bitbake/lib",
+                    "${workspaceFolder}/sources/oe-core/meta/lib"
+                ],
+                "python.analysis.exclude": [
+                    "**/build",
+                    // manual config needs default exclusions
+                    "**/__pycache__",
+                    ".git"
+                ],
+                "python.analysis.extraPaths": [
+                    "${workspaceFolder}/sources/bitbake/lib",
+                    "${workspaceFolder}/sources/oe-core/meta/lib"
+                ],
+                "bitbake.commandWrapper": "kas shell -Ek kas/base.yml -c",
+                "bitbake.pathToBitbakeFolder": "${workspaceFolder}/sources/bitbake",
+                "bitbake.pathToBuildFolder": "${workspaceFolder}/build",
+                "bitbake.pathToEnvScript": "${workspaceFolder}/sources/oe-core/oe-init-build-env",
+                "files.associations": {
+                    "*.conf": "bitbake",
+                    "*.inc": "bitbake"
+                },
+                "files.watcherExclude": {
+                    "**/.git/objects/**": true,
+                    "**/.git/subtree-cache/**": true,
+                    "**/build/**": true
+                }
+            },
+            "extensions": [
+                "github.vscode-github-actions",
+                "hangxingliu.vscode-systemd-support",
+                "mads-hartmann.bash-ide-vscode",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "yocto-project.yocto-bitbake"
+            ]
+        }
+    }
+}
